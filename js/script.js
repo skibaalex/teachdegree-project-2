@@ -133,6 +133,21 @@ const searchFunction = (input, data) => {
    return filteredArray;
 }
 
+const handleFilterRendering = (filteredArray) => {
+   if (filteredArray.length) {
+      showPage(filteredArray, 0)
+      addPagination(filteredArray)
+   } else {
+      const error = document.createElement('h3')
+      error.className = 'error-message'
+      error.innerText = 'No results found'
+      const ul = document.querySelector('.student-list')
+      ul.innerHTML = ''
+      ul.appendChild(error)
+      addPagination(filteredArray)
+   }
+}
+
 const searchBar = (data) => {
    const header = document.querySelector('.header')
    //render the search bar
@@ -143,19 +158,11 @@ const searchBar = (data) => {
    input.addEventListener('keyup', (e) => {
       const input = e.target.value
       const filteredArray = searchFunction(input, data)
-      console.log(filteredArray)
-      if (filteredArray.length) {
-         showPage(filteredArray, 0)
-         addPagination(filteredArray)
-      } else {
-         const error = document.createElement('h3')
-         error.className = 'error-message'
-         error.innerText = 'No results found'
-         const ul = document.querySelector('.student-list')
-         ul.innerHTML = ''
-         ul.appendChild(error)
-         addPagination(filteredArray)
-      }
+      handleFilterRendering(filteredArray)
+   })
+   button.addEventListener('click', (e) => {
+      const filteredArray = searchFunction(input.value, data)
+      handleFilterRendering(filteredArray)
    })
 }
 
