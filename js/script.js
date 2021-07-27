@@ -132,13 +132,9 @@ const renderSearchBar = (headerElement) => {
    headerElement.appendChild(searchBar)
 }
 
-//souce https://levelup.gitconnected.com/use-regex-and-javascript-to-improve-search-results-870932050d08
 const checkName = (name, input) => {
-   var pattern = input.toLowerCase().split("").map((x) => {
-      return `(?=.*${x})`
-   }).join("");
-   var regex = new RegExp(`${pattern}`, "g")
-   return name.match(regex);
+   var pattern = input.toLowerCase()
+   return name.includes(pattern);
 }
 
 const searchFunction = (input, data) => {
