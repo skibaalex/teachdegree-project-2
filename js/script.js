@@ -75,6 +75,20 @@ const showPage = (data, page) => {
 }
 
 
+/**
+ * Remove the active from any sibling
+ * @param {HTMLElement} element 
+ */
+
+const clearActive = (element) => {
+   const active = document.querySelectorAll('.active')
+   for (let btn of active) {
+      //skip if its the same element
+      if (btn === element) continue;
+      btn.classList.remove('active')
+   }
+}
+
 
 /*
 Create the `addPagination` function
@@ -95,6 +109,8 @@ const addPagination = (data) => {
       //TODO: Add Event listener
       button.addEventListener('click', (e) => {
          const page = parseInt(e.target.innerText) - 1;
+         e.target.className = 'active'
+         clearActive(e.target)
          showPage(data, page)
       })
    })
