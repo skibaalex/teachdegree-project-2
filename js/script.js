@@ -1,23 +1,10 @@
-/*
-Treehouse Techdegree:
-FSJS Project 2 - Data Pagination and Filtering
-*/
-
-
-
-/*
-For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
-*/
-
-
 const studentsPerPage = 9
 
-/*
-Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
-*/
+/**
+ * Function to generate DOM node for the student element
+ * @param {object} student Object contains the student information
+ * @returns HTMLElement
+ */
 
 const generateStudentNode = (student) => {
    const createStudentDiv = () => {
@@ -63,6 +50,12 @@ const generateStudentNode = (student) => {
    return li
 }
 
+/**
+ * A function to render a page with a list of students to the DOM
+ * @param {Array<object>} data Array of student objects
+ * @param {number} page the page shown on the front end 
+ */
+
 const showPage = (data, page) => {
    const start = page * studentsPerPage;
    const end = start + studentsPerPage;
@@ -90,10 +83,10 @@ const clearActive = (element) => {
 }
 
 
-/*
-Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
-*/
+/**
+ * This function renders the pagination elements to DOM and take care of their functionality
+ * @param {Array<object>} data Array of student objects
+ */
 
 const addPagination = (data) => {
    const pages = new Array(Math.ceil(data.length / studentsPerPage)).fill('page')
@@ -117,8 +110,10 @@ const addPagination = (data) => {
 }
 
 
-//Extra Credit
-
+/**
+ * Renders the Search bar to the DOM and take care of its cuntionality 
+ * @param {HTMLElement} headerElement Header HTML Element
+ */
 const renderSearchBar = (headerElement) => {
    const searchBar = document.createElement('label');
    searchBar.for = 'search';
@@ -132,11 +127,24 @@ const renderSearchBar = (headerElement) => {
    headerElement.appendChild(searchBar)
 }
 
+
+/**
+ * A function that looks for a matching pattern between a name and a user input
+ * @param {string} name the full name to compare to
+ * @param {string} input user input to compare from
+ * @returns boolean
+ */
 const checkName = (name, input) => {
    var pattern = input.toLowerCase()
    return name.includes(pattern);
 }
 
+/**
+ * a function looking for elem
+ * @param {string} input user input
+ * @param {Array<object>} data data to search in
+ * @returns boolean
+ */
 const searchFunction = (input, data) => {
    const filteredArray = data.filter(student => {
       const name = `${student.name.first} ${student.name.last}`.toLowerCase()
@@ -145,6 +153,11 @@ const searchFunction = (input, data) => {
    return filteredArray;
 }
 
+
+/**
+ * handle the render of students or an error message in case the array is empty
+ * @param {array} filteredArray an array of students or an empty array 
+ */
 const handleFilterRendering = (filteredArray) => {
    if (filteredArray.length) {
       showPage(filteredArray, 0)
@@ -160,6 +173,11 @@ const handleFilterRendering = (filteredArray) => {
    }
 }
 
+
+/**
+ * A function incharge of rendering the search bar and its functionality
+ * @param {array} data array of students
+ */
 const searchBar = (data) => {
    const header = document.querySelector('.header')
    //render the search bar
